@@ -3,6 +3,25 @@ import os
 import pandas as pd
 
 def dirsize(basepath, unit = None, rnd = 3):
+    '''
+    This function gets you the TOTAL size of every FOLDER in the directory and its children
+    
+    returns a float
+
+    dirsize(basepath, 
+             unit = None,  
+             rnd = 3)
+    
+    basepath: the relavite path to the folder whose contents you want to calculate
+    
+    unit: {"KB":1,"MB":2,"GB":3}
+        the unit in which you want to calculate. default KB
+        
+    rnd: (int)
+        how many decimals you want the resulting number to have. default 3.
+    
+    '''
+
 
     total_size = 0
     for path, directories, files in os.walk(basepath):
@@ -20,9 +39,34 @@ def dirsize(basepath, unit = None, rnd = 3):
         final_size = total_size/ (1024**metric[unit])
         return round(final_size, rnd)
     
-    return total_size
-    
+    return round(total_size / 1024, rnd)
+ 
+# print(dirsize(pwd)) 
+
+# print(dirsize(pwd, "KB")) 
+
+
+
 def filesize(basepath, unit = None, rnd = 3):
+    '''
+    This function gets you the TOTAL size of every file in the directory and its children
+    
+    returns a float
+
+    dirsize(basepath, 
+             unit = None,  
+             rnd = 3)
+    
+    basepath: the relavite path to the folder whose contents you want to calculate
+    
+    unit: {"KB":1,"MB":2,"GB":3}
+        the unit in which you want to calculate. default KB
+        
+    rnd: (int)
+        how many decimals you want the resulting number to have. default 3.
+    
+    '''
+
     
     total_size = os.path.getsize(basepath)
     
@@ -32,10 +76,30 @@ def filesize(basepath, unit = None, rnd = 3):
         final_size = total_size/ (1024**metric[unit])
         return round(final_size, rnd)
     
-    return total_size
+    return round(total_size / 1024, rnd)
+
+
 
 def sizer(basepath, unit = None, rnd = 3):
-    #dirsize filesize
+    
+    '''
+    This function gets you the TOTAL size of EVERYTHING (file and folder) in the directory and its children
+    
+    returns a float
+
+    dirsize(basepath, 
+             unit = None,  
+             rnd = 3)
+    
+    basepath: the relavite path to the folder whose contents you want to calculate
+    
+    unit: {"KB":1,"MB":2,"GB":3}
+        the unit in which you want to calculate. default KB
+        
+    rnd: (int)
+        how many decimals you want the resulting number to have. default 3.
+    
+    '''
     
     size = 0
     
@@ -49,8 +113,21 @@ def sizer(basepath, unit = None, rnd = 3):
         
     return size
 
-def list_size(basepath, unit = None, rnd = 3, to_excel = False):
+def list_size(basepath, unit = "KB", rnd = 3, to_excel = False):
     
+    '''
+    This function calculates the sizes of everything contained in  the path (files and folders)
+    
+    returns a pandas series
+    
+    basepath: the parent directory in which to calculate the size of its children
+    
+    unit: the unit in which you want to calculate it. default KB
+    
+    rnd: (int)
+        how many decimals you want the resulting number to have. default 3.
+        
+    '''
 
         
     data = []
@@ -76,11 +153,11 @@ def list_size(basepath, unit = None, rnd = 3, to_excel = False):
             result = (path,size)
             
             data.append(result)
-            
     d = pd.DataFrame(data)
     d.set_index(0, inplace = True)#[1]
     d.columns = ["sizes"]
     print(d.sizes.sort_values(ascending = False))
+
 
 
 def main():

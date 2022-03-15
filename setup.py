@@ -6,7 +6,7 @@ from setuptools import setup
 # requirements = [x.strip() for x in content if 'git+' not in x]
 
 setup(name='sizer',
-      version="1",
+      version="1.0.0",
       description="automation tool for checking file and directory size",
       packages=["sizer"],
       #install_requires=requirements,
