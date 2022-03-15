@@ -156,9 +156,8 @@ def list_size(basepath, unit = "KB", rnd = 3, to_excel = False):
     d = pd.DataFrame(data)
     d.set_index(0, inplace = True)#[1]
     d.columns = ["sizes"]
-    
-    print(d.sizes.sort_values(ascending = False)    )
-    
+    print(d.sizes.sort_values(ascending = False))
+
 
 
 def main():
@@ -187,4 +186,4 @@ def main():
         
 if __name__ == "__main__":
     	
-    print(main())
+    main()

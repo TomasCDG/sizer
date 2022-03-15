@@ -8,18 +8,18 @@ if len(sys.argv) == 1:
     print(f"unit: MB")
     list_size(os.getcwd(), unit = "MB", rnd = 2)
     
-if len(sys.argv) == 2:
+if len(sys.argv) == 2:  #sizel "path inside my pwd"
     print(f"unit: MB")
     list_size(sys.argv[1])
     
-if len(sys.argv) == 3:
-    print(f"unit: {sys.argv[2]}")
+if len(sys.argv) == 3:  #sizel "folder inside pwd"  "mb"
+    print(f"unit: {sys.argv[2].upper()}")
     list_size(sys.argv[1], 
-        unit = sys.argv[2])
+        unit = sys.argv[2].upper())
         
-if len(sys.argv) == 4:
-    print(f"unit: {sys.argv[2]}")
+if len(sys.argv) == 4: # sizel "folder" "mb" 3 
+    print(f"unit: {sys.argv[2].upper()}")
     list_size(sys.argv[1], 
-        unit = sys.argv[2],
+        unit = sys.argv[2].upper(),
         rnd = sys.argv[3])
 

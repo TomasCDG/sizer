@@ -1,4 +1,6 @@
 setup.py
+notebooks/Untitled.ipynb
+notebooks/.ipynb_checkpoints/Untitled-checkpoint.ipynb
 scripts/sizel
 scripts/sizer
 sizer/lib.py
@@ -7,3 +9,4 @@ sizer.egg-info/SOURCES.txt
 sizer.egg-info/dependency_links.txt
 sizer.egg-info/not-zip-safe
 sizer.egg-info/top_level.txt
+sizer/__pycache__/lib.cpython-38.pyc
