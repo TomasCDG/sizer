@@ -13,5 +13,11 @@ setup(name='sizer',
       #test_suite= 'tests',
       # include_package_data: to install data from MANIFEST.in
       #include_package_data=True,
-      scripts=['scripts/sizer', "scripts/sizel"],
+      scripts=['scripts/sizer', 
+               "scripts/sizel", 
+               "scripts/sizereport",
+               "scripts/finder-ext",
+               "scripts/ext-mover",
+               "scripts/finder-reg",
+               "scripts/reg-mover",],
       zip_safe=False)

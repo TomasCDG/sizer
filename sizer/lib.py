@@ -102,14 +102,17 @@ def sizer(basepath, unit = None, rnd = 3):
     '''
     
     size = 0
-    
+    import pathlib
     for path in os.listdir(basepath):
         
         if os.path.isfile(path):
-            size += filesize(path, unit = unit, rnd = rnd)
+            # size += filesize(path, unit = unit, rnd = rnd)
+            size += filesize(pathlib.Path(path), unit = unit, rnd = rnd)
+
             
         if os.path.isdir(path):
-            size += dirsize(path, unit = unit, rnd = rnd)
+            # size += dirsize(path, unit = unit, rnd = rnd)
+            size += dirsize(pathlib.Path(path), unit = unit, rnd = rnd)
         
     return size
 
@@ -154,11 +157,77 @@ def list_size(basepath, unit = "KB", rnd = 3, to_excel = False):
             
             data.append(result)
     d = pd.DataFrame(data)
-    d.set_index(0, inplace = True)#[1]
-    d.columns = ["sizes"]
+    d.columns = ["file", "size"]
+    d.set_index("file", inplace = True)
     
-    print(d.sizes.sort_values(ascending = False)    )
+    sorted_sizes = d.sort_values(by = "size",ascending = False)
     
+    if len(sorted_sizes) > 10:
+        decision = input("more than 10 files found, select number of files to show\n")
+        print( sorted_sizes.head(int(decision))    )
+
+    if to_excel == True:
+        from datetime import datetime
+        now = datetime.now()
+        now = str(now.astimezone())[:16].replace(":","-")
+        
+        filepath_list = os.getcwd().split("/")
+        # if len(filepath_list) > 1:
+        #     filename = filepath_list[-1]
+        # if len(filepath_list) == 1:
+        #     filename = __file__
+        
+        sorted_sizes.to_csv(f"/home/tomascdg/code/reports/{now} {filepath_list[-1]}.csv")        
+    
+    return sorted_sizes
+
+def list_size_df(basepath, unit = "KB", rnd = 3, to_excel = False):
+    
+    '''
+    This function calculates the sizes of everything contained in  the path (files and folders)
+    
+    returns a pandas series
+    
+    basepath: the parent directory in which to calculate the size of its children
+    
+    unit: the unit in which you want to calculate it. default KB
+    
+    rnd: (int)
+        how many decimals you want the resulting number to have. default 3.
+        
+    '''
+
+        
+    data = []
+    
+    for path in os.listdir(basepath):
+        
+        p = os.path.join(basepath, path)
+        
+        if os.path.isfile(p):
+            size = filesize(p, unit = unit, rnd = rnd)
+            
+            #print(path, size)
+            
+            result = (path,size)
+            
+            data.append(result)
+            
+        if os.path.isdir(p):
+            size = dirsize(p, unit = unit, rnd = rnd)
+            
+            #print(path, size)
+            
+            result = (path,size)
+            
+            data.append(result)
+    d = pd.DataFrame(data)
+    d.columns = ["file", "size"]
+    
+    sorted_sizes = d.sort_values(by = "size",ascending = False)
+    
+    
+    return sorted_sizes
 
 
 def main():

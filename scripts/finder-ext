@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from sizer.finder_ext import finder_ext
+
+found_list, extensions = finder_ext(printer=True)
+
+print("would you like to download that as a csv? (yes/y)")
+
+response = input()
+
+if response.lower() in ["yes","y"]:
+
+    import pandas as pd
+    from datetime import datetime
+    now = datetime.now()
+    now = str(now.astimezone())[:16].replace(":","-")
+    extensions = "-".join(extensions)
+
+    destination = f"/home/tomascdg/code/file_search/{now} {extensions}.csv"
+
+    df = pd.Series(found_list)
+    
+    df.to_csv(destination)
